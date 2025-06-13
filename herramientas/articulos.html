@@ -21,6 +21,32 @@
                     <label for="article-topic" class="block mb-2 font-medium">Tema o descripción</label>
                     <textarea id="article-topic" rows="5" class="w-full p-3 border border-gray-300 rounded-lg dark:bg-gray-700" placeholder="Escribe el tema de tu artículo..."></textarea>
                 </div>
+
+                <div>
+                    <label for="article-tone" class="block mb-2 font-medium">Tono (opcional)</label>
+                    <select id="article-tone" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                        <option value="" selected>Sin preferencia</option>
+                        <option value="formal">Formal</option>
+                        <option value="informal">Informal</option>
+                        <option value="casual">Casual</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="article-size" class="block mb-2 font-medium">Tamaño (opcional)</label>
+                    <select id="article-size" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                        <option value="" selected>Sin preferencia</option>
+                        <option value="pequeño">Pequeño</option>
+                        <option value="mediano">Mediano</option>
+                        <option value="grande">Grande</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="article-keywords" class="block mb-2 font-medium">Palabras clave (opcional)</label>
+                    <input type="text" id="article-keywords" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700" placeholder="SEO, marketing, IA...">
+                </div>
+
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Generar Artículo</button>
             </form>
             <div id="article-result" class="mt-6 whitespace-pre-wrap"></div>
