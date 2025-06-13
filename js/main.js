@@ -242,6 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const cancelFeedbackBtn = document.getElementById('cancel-feedback');
     const historyOverlay = document.getElementById('history-overlay');
 
+    const navMenu = document.getElementById("nav-menu");
     // --- AUTH, MODALS & SETTINGS LOGIC ---
     const showLoginModal = () => loginRequiredModal.classList.remove('hidden');
     const hideLoginModal = () => loginRequiredModal.classList.add('hidden');
@@ -463,10 +464,12 @@ document.addEventListener('DOMContentLoaded', () => {
             historyPanel.classList.toggle('translate-x-full');
             historyOverlay.classList.toggle('hidden');
             userAuthArea.classList.toggle('hidden');
+            navMenu.classList.toggle("hidden");
         });
         historyOverlay.addEventListener('click', () => {
             historyPanel.classList.add('hidden', 'translate-x-full');
             historyOverlay.classList.add('hidden');
+            navMenu.classList.remove("hidden");
             userAuthArea.classList.remove('hidden');
         });
 
