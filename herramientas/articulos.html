@@ -29,7 +29,37 @@
                         <option value="formal">Formal</option>
                         <option value="informal">Informal</option>
                         <option value="casual">Casual</option>
+                        <option value="custom">Personalizado...</option>
                     </select>
+                    <input type="text" id="custom-tone" class="w-full p-2 mt-2 border border-gray-300 rounded-lg dark:bg-gray-700 hidden" placeholder="Escribe el tono deseado">
+                </div>
+
+                <button id="toggle-advanced" type="button" class="text-blue-600 hover:underline">Configuración avanzada</button>
+
+                <div id="advanced-section" class="hidden space-y-4 border-t pt-4">
+                    <div>
+                        <label for="audience-age" class="block mb-2 font-medium">Rango de edad del público objetivo</label>
+                        <input type="text" id="audience-age" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700" placeholder="18-35, por ejemplo">
+                    </div>
+                    <div>
+                        <label for="markdown-format" class="block mb-2 font-medium">Formato Markdown</label>
+                        <select id="markdown-format" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                            <option value="no" selected>No</option>
+                            <option value="si">Sí</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="reading-level" class="block mb-2 font-medium">Nivel de lectura</label>
+                        <select id="reading-level" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                            <option value="basico">Básico</option>
+                            <option value="intermedio">Intermedio</option>
+                            <option value="profesional">Profesional</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="grammar-custom" class="block mb-2 font-medium">Personalización gramatical</label>
+                        <input type="text" id="grammar-custom" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700" placeholder="Preferencias gramaticales">
+                    </div>
                 </div>
 
                 <div>
@@ -49,7 +79,15 @@
 
                 <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Generar Artículo</button>
             </form>
-            <div id="article-result" class="mt-6 whitespace-pre-wrap"></div>
+            <div id="article-result-section" class="mt-6 hidden">
+                <div class="flex justify-between items-center mb-3 border-b-2 border-gray-300 dark:border-gray-700 pb-2">
+                    <h2 class="text-2xl font-semibold">Artículo Generado</h2>
+                    <button id="copy-article" class="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-sm font-medium py-2 px-4 rounded-lg">Copiar</button>
+                </div>
+                <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                    <pre id="article-result" class="whitespace-pre-wrap font-sans"></pre>
+                </div>
+            </div>
         </main>
     </div>
     <footer class="w-full text-center p-4 text-gray-500 dark:text-gray-400 text-sm">
