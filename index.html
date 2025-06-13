@@ -26,7 +26,6 @@
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans flex flex-col min-h-screen">
 
-    <div class="container mx-auto max-w-4xl p-4 md:p-8 flex-grow">
         
         <button id="settings-toggle" class="fixed top-4 left-4 z-20 bg-gray-700 hover:bg-gray-600 text-white font-bold p-3 rounded-full shadow-lg transition-transform transform hover:scale-110">
             <img src="https://www.svgrepo.com/show/193270/settings-gear.svg" alt="Ajustes" class="h-5 w-5">
@@ -89,6 +88,7 @@
         <div id="history-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"></div>
 
         </div>
+        <div id="nav-overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-10"></div>
 
         <div id="user-auth-area" class="fixed top-4 right-20 z-20 flex items-center gap-3">
             </div>
@@ -129,7 +129,7 @@
             </div>
         </aside>
 
-        <header class="text-center mb-6 pt-6">
+        <header class="text-center mb-4 pt-4">
               <h1 class="flex items-center justify-center text-4xl md:text-5xl font-bold text-blue-600 dark:text-blue-400"><img src="images/correctia-logo.png" alt="Correctia — Redacción con IA" class="w-56 md:w-64 h-auto"><span class="ml-2 text-4xl md:text-5xl">🚀</span></h1>
             <p id="header-subtitle" class="text-lg text-gray-600 dark:text-gray-400 mt-1">Tu navaja suiza de redacción con IA.</p>
         </header>
@@ -196,7 +196,6 @@
         </section>
        
 
-    </div>
 
     <footer class="w-full text-center p-4 text-gray-500 dark:text-gray-400 text-sm">
         <p>&copy; 2025 Correctia. Todos los derechos reservados.</p>
