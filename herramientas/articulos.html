@@ -85,9 +85,17 @@
                     <div>
                         <label for="person-grammar" class="block mb-2 font-medium">Persona gramatical</label>
                         <select id="person-grammar" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                            <option value="" selected>Sin preferencia</option>
                             <option value="1ra persona">1ra persona</option>
                             <option value="2da persona">2da persona</option>
                             <option value="3ra persona">3ra persona</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="html-format" class="block mb-2 font-medium">Formato HTML</label>
+                        <select id="html-format" class="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700">
+                            <option value="no" selected>No</option>
+                            <option value="si">Sí</option>
                         </select>
                     </div>
                 </div>
@@ -105,6 +113,7 @@
                 <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
                     <pre id="article-result" class="whitespace-pre-wrap font-sans"></pre>
                 </div>
+                <div id="swipe-hint" class="hidden mt-2 text-center text-sm text-gray-600 dark:text-gray-400">Desliza a la derecha o izquierda para alternar entre HTML y formato normal</div>
             </div>
         </main>
     </div>

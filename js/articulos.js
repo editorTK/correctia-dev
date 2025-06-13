@@ -17,6 +17,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const result = document.getElementById('article-result');
     const copyArticleBtn = document.getElementById('copy-article');
     const convertHtmlBtn = document.getElementById('convert-html');
+    const htmlSelect = document.getElementById('html-format');
+    const swipeHint = document.getElementById('swipe-hint');
+    let lastLanguage = 'español';
 
     toneSelect.addEventListener('change', () => {
         if (toneSelect.value === 'custom') {
@@ -40,6 +43,18 @@ document.addEventListener('DOMContentLoaded', () => {
         advancedSection.classList.toggle('hidden');
     });
 
+    htmlSelect.addEventListener('change', () => {
+        if (htmlSelect.value === 'si') {
+            convertHtmlBtn.classList.add('hidden');
+        } else {
+            convertHtmlBtn.classList.remove('hidden');
+        }
+    });
+    // Ejecutar una vez al cargar
+    if (htmlSelect.value === 'si') {
+        convertHtmlBtn.classList.add('hidden');
+    }
+
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         const topic = topicInput.value.trim();
@@ -52,8 +67,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const language = languageSelect.value === 'otro' ? customLanguageInput.value.trim() : languageSelect.value;
         const audienceAge = audienceAgeInput.value.trim();
         const markdown = markdownSelect.value;
+        const htmlFormat = htmlSelect.value;
         const readingLevel = readingLevelSelect.value;
         const personGrammar = personGrammarSelect.value;
+
+        if (markdown === 'si' && htmlFormat === 'si') {
+            alert('No puedes seleccionar Markdown y HTML a la vez.');
+            return;
+        }
 
         let prompt = `Redacta un articulo detallado en ${language} sobre: ${topic}`;
 
@@ -72,8 +93,12 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             prompt += `. No uses formato Markdown en el resultado`;
         }
+        if (htmlFormat === 'si') {
+            prompt += `. Devuelve el artículo en formato HTML en ${language}`;
+        }
         prompt += `. Devuelve únicamente el artículo sin explicaciones.`;
 
+        lastLanguage = language;
         resultSection.classList.remove('hidden');
         result.textContent = 'Generando...';
         try {
@@ -97,7 +122,14 @@ document.addEventListener('DOMContentLoaded', () => {
     convertHtmlBtn.addEventListener('click', async () => {
         const article = result.innerText.trim();
         if (!article) return;
-        let htmlPrompt = 'Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en el idioma del artículo. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.';
+        if (!localStorage.getItem('swipeHintShown')) {
+            swipeHint.classList.remove('hidden');
+            swipeHint.classList.add('animate-bounce');
+            setTimeout(() => { swipeHint.classList.add('hidden'); }, 4000);
+            localStorage.setItem('swipeHintShown', '1');
+        }
+
+        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en ${lastLanguage}. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
         if (isMarkdown(article)) {
             htmlPrompt += ' Sigue la estructura del formato Markdown para transformarlo en HTML.';
         }
