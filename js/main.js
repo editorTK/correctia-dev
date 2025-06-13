@@ -260,6 +260,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const suggestionsTitleEl = document.getElementById('suggestions-title');
 
     const navMenu = document.getElementById("nav-menu");
+    const menuToggleBtn = document.getElementById('menu-toggle');
+    const menuItems = document.getElementById('menu-items');
     // --- AUTH, MODALS & SETTINGS LOGIC ---
     const showLoginModal = () => loginRequiredModal.classList.remove('hidden');
     const hideLoginModal = () => loginRequiredModal.classList.add('hidden');
@@ -267,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const updateAuthStateUI = async () => {
         if (puter.auth.isSignedIn()) {
             const user = await puter.auth.getUser();
-            userAuthArea.innerHTML = `<span class="text-sm font-medium text-gray-800 dark:text-gray-200">${getT('hello')} ${user.username}</span>`;
+            userAuthArea.innerHTML = `<span class="text-sm font-medium text-gray-800 dark:text-gray-200">${user.username}</span>`;
             logoutBtnSettings.classList.remove('hidden');
         } else {
             userAuthArea.innerHTML = `<button id="sign-in-btn" class="bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg hover:bg-green-700">${getT('signIn')}</button>`;
@@ -590,6 +592,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const mailto = `mailto:service.correctia@gmail.com?subject=Correctia%20Feedback&body=${encodeURIComponent(comment)}`;
             window.location.href = mailto;
             feedbackModal.classList.add('hidden');
+        });
+
+        menuToggleBtn.addEventListener('click', () => {
+            menuItems.classList.toggle('hidden');
         });
 
         renderHistory();
