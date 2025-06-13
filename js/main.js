@@ -43,7 +43,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showChanges: 'Mostrar cambios',
             hideChanges: 'Ocultar cambios',
             changesTitle: 'Cambios realizados',
-            suggestionsTitle: 'Sugerencias',
             signIn: 'Iniciar Sesión',
             signOut: 'Salir',
             hello: 'Hola,',
@@ -104,7 +103,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showChanges: 'Show changes',
             hideChanges: 'Hide changes',
             changesTitle: 'Changes made',
-            suggestionsTitle: 'Suggestions',
             signIn: 'Sign In',
             signOut: 'Sign Out',
             hello: 'Hi,',
@@ -177,7 +175,6 @@ document.addEventListener('DOMContentLoaded', () => {
         copyButton.innerText = t.copy;
         toggleChangesBtn.innerText = changesSection.classList.contains('hidden') ? t.showChanges : t.hideChanges;
         changesTitleEl.innerText = t.changesTitle;
-        suggestionsTitleEl.innerText = t.suggestionsTitle;
         document.getElementById('privacy-link').innerText = t.privacy || 'Política de Privacidad';
         document.getElementById('terms-link').innerText = t.legalTerms || 'Términos de Uso';
 
@@ -191,27 +188,27 @@ document.addEventListener('DOMContentLoaded', () => {
     const PROMPTS = {
         correct: {
             title: 'Texto Corregido',
-            prompt: 'Actúa como un experto corrector de textos. Revisa el siguiente texto, corrige cualquier error de ortografía, gramática y puntuación y mejora la redacción sin alterar el significado. Responde únicamente en formato JSON con las claves "result" (texto corregido), "changes" (lista de cambios) y "suggestions" (lista de sugerencias). Usa el mismo idioma del texto a mejorar.'
+            prompt: 'Actúa como un experto corrector de textos. Revisa el siguiente texto, corrige cualquier error de ortografía, gramática y puntuación y mejora la redacción sin alterar el significado. Responde únicamente en formato JSON con las claves "result" (texto corregido) y "changes" (lista de cambios). Usa el mismo idioma del texto a mejorar.'
         },
         formal: {
             title: 'Texto Formalizado',
-            prompt: 'Actúa como un asistente de redacción profesional. Transforma el siguiente texto a un tono estrictamente formal y elocuente, apto para un entorno académico o corporativo. Devuelve solo un JSON con "result" (texto formalizado), "changes" y "suggestions". Usa el idioma original del texto.'
+            prompt: 'Actúa como un asistente de redacción profesional. Transforma el siguiente texto a un tono estrictamente formal y elocuente, apto para un entorno académico o corporativo. Devuelve solo un JSON con "result" (texto formalizado) y "changes". Usa el idioma original del texto.'
         },
         casual: {
             title: 'Texto Casual',
-            prompt: 'Actúa como un redactor creativo y amigable. Convierte el siguiente texto a un tono casual y cercano. Responde con un JSON que incluya "result" (texto casual), "changes" y "suggestions". Utiliza el idioma del texto a mejorar.'
+            prompt: 'Actúa como un redactor creativo y amigable. Convierte el siguiente texto a un tono casual y cercano. Responde con un JSON que incluya "result" (texto casual) y "changes". Utiliza el idioma del texto a mejorar.'
         },
         simplify: {
             title: 'Texto Simplificado',
-            prompt: 'Actúa como un experto en comunicación clara. Simplifica el siguiente texto con palabras sencillas y frases cortas. Devuelve un JSON con "result" (texto simplificado), "changes" y "suggestions". Usa el idioma original.'
+            prompt: 'Actúa como un experto en comunicación clara. Simplifica el siguiente texto con palabras sencillas y frases cortas. Devuelve un JSON con "result" (texto simplificado) y "changes". Usa el idioma original.'
         },
         summarize: {
             title: 'Resumen Generado',
-            prompt: 'Actúa como un analista experto. Resume el siguiente texto de forma breve y directa al grano. Devuelve un JSON con "result" (resumen), "changes" y "suggestions". Responde en el idioma del texto original.'
+            prompt: 'Actúa como un analista experto. Resume el siguiente texto de forma breve y directa al grano. Devuelve un JSON con "result" (resumen) y "changes". Responde en el idioma del texto original.'
         },
         expand: {
             title: 'Texto Expandido',
-            prompt: 'Actúa como un escritor experto. Toma la siguiente idea o texto y desarróllala con más detalle y ejemplos relevantes. Responde solo con un JSON que incluya "result" (texto expandido), "changes" y "suggestions". Usa el mismo idioma del texto.'
+            prompt: 'Actúa como un escritor experto. Toma la siguiente idea o texto y desarróllala con más detalle y ejemplos relevantes. Responde solo con un JSON que incluya "result" (texto expandido) y "changes". Usa el mismo idioma del texto.'
         }
     };
 
@@ -255,9 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const toggleChangesBtn = document.getElementById('toggle-changes-btn');
     const changesSection = document.getElementById('changes-section');
     const changesList = document.getElementById('changes-list');
-    const suggestionsList = document.getElementById('suggestions-list');
     const changesTitleEl = document.getElementById('changes-title');
-    const suggestionsTitleEl = document.getElementById('suggestions-title');
 
     const navMenu = document.getElementById("nav-menu");
     const menuToggleBtn = document.getElementById('menu-toggle');
@@ -321,21 +316,19 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Puter response raw:', response);
             let resultText = getT('noResponse');
             let changes = [];
-            let suggestions = [];
             if (response?.message?.content) {
                 try {
                     const data = JSON.parse(response.message.content);
                     resultText = data.result || resultText;
                     changes = Array.isArray(data.changes) ? data.changes : [];
-                    suggestions = Array.isArray(data.suggestions) ? data.suggestions : [];
                 } catch (e) {
                     resultText = response.message.content;
                 }
             }
             resultTitle.innerText = title;
             resultContainer.innerText = resultText;
-            lastExtraInfo = { changes, suggestions };
-            if (changes.length || suggestions.length) {
+            lastExtraInfo = { changes };
+            if (changes.length) {
                 toggleChangesBtn.classList.remove('hidden');
                 toggleChangesBtn.innerText = getT('showChanges');
                 changesSection.classList.add('hidden');
@@ -366,16 +359,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderChanges = () => {
         if (!lastExtraInfo) return;
         changesList.innerHTML = '';
-        suggestionsList.innerHTML = '';
         lastExtraInfo.changes.forEach(c => {
             const li = document.createElement('li');
             li.textContent = c;
             changesList.appendChild(li);
-        });
-        lastExtraInfo.suggestions.forEach(s => {
-            const li = document.createElement('li');
-            li.textContent = s;
-            suggestionsList.appendChild(li);
         });
     };
 
@@ -580,7 +567,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pendingAction = null;
                 runPrompt(
                     getT('resultTitles').custom,
-                    `${prompt}\n\nEres un agente que ayuda a las personas a mejorar sus textos. Devuelve solo un JSON con las claves "result", "changes" y "suggestions" siguiendo el idioma del texto original.`,
+                    `${prompt}\n\nEres un agente que ayuda a las personas a mejorar sus textos. Devuelve solo un JSON con las claves "result" y "changes" siguiendo el idioma del texto original.`,
                     userText,
                     button
                 );

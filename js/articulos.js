@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const sizeSelect = document.getElementById('article-size');
     const keywordsInput = document.getElementById('article-keywords');
     const languageSelect = document.getElementById('article-language');
+    const customLanguageInput = document.getElementById('custom-language');
     const toggleAdvancedBtn = document.getElementById('toggle-advanced');
     const advancedSection = document.getElementById('advanced-section');
     const audienceAgeInput = document.getElementById('audience-age');
@@ -15,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resultSection = document.getElementById('article-result-section');
     const result = document.getElementById('article-result');
     const copyArticleBtn = document.getElementById('copy-article');
+    const convertHtmlBtn = document.getElementById('convert-html');
 
     toneSelect.addEventListener('change', () => {
         if (toneSelect.value === 'custom') {
@@ -22,6 +24,15 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             customToneInput.classList.add('hidden');
             customToneInput.value = '';
+        }
+    });
+
+    languageSelect.addEventListener('change', () => {
+        if (languageSelect.value === 'otro') {
+            customLanguageInput.classList.remove('hidden');
+        } else {
+            customLanguageInput.classList.add('hidden');
+            customLanguageInput.value = '';
         }
     });
 
@@ -38,7 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const customTone = customToneInput.value.trim();
         const size = sizeSelect.value;
         const keywords = keywordsInput.value.trim();
-        const language = languageSelect.value;
+        const language = languageSelect.value === 'otro' ? customLanguageInput.value.trim() : languageSelect.value;
         const audienceAge = audienceAgeInput.value.trim();
         const markdown = markdownSelect.value;
         const readingLevel = readingLevelSelect.value;
@@ -79,5 +90,28 @@ document.addEventListener('DOMContentLoaded', () => {
             copyArticleBtn.innerText = '¡Copiado!';
             setTimeout(() => { copyArticleBtn.innerText = 'Copiar'; }, 2000);
         });
+    });
+
+    const isMarkdown = (text) => /(^#|\*\*|\*|`|\-|\d+\. )/m.test(text);
+
+    convertHtmlBtn.addEventListener('click', async () => {
+        const article = result.innerText.trim();
+        if (!article) return;
+        let htmlPrompt = 'Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en el idioma del artículo. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.';
+        if (isMarkdown(article)) {
+            htmlPrompt += ' Sigue la estructura del formato Markdown para transformarlo en HTML.';
+        }
+        convertHtmlBtn.disabled = true;
+        const originalText = convertHtmlBtn.innerText;
+        convertHtmlBtn.innerText = '🧠 ...';
+        try {
+            const res = await puter.ai.chat(`${htmlPrompt}\n\n---\n\n${article}`, { model: 'gpt-4.1-nano' });
+            result.textContent = res?.message?.content || 'Sin respuesta';
+        } catch (err) {
+            console.error('Error convirtiendo a HTML:', err);
+        } finally {
+            convertHtmlBtn.disabled = false;
+            convertHtmlBtn.innerText = originalText;
+        }
     });
 });
