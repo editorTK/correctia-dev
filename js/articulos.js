@@ -5,12 +5,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const customToneInput = document.getElementById('custom-tone');
     const sizeSelect = document.getElementById('article-size');
     const keywordsInput = document.getElementById('article-keywords');
+    const languageSelect = document.getElementById('article-language');
     const toggleAdvancedBtn = document.getElementById('toggle-advanced');
     const advancedSection = document.getElementById('advanced-section');
     const audienceAgeInput = document.getElementById('audience-age');
     const markdownSelect = document.getElementById('markdown-format');
     const readingLevelSelect = document.getElementById('reading-level');
-    const grammarCustomInput = document.getElementById('grammar-custom');
+    const personGrammarSelect = document.getElementById('person-grammar');
     const resultSection = document.getElementById('article-result-section');
     const result = document.getElementById('article-result');
     const copyArticleBtn = document.getElementById('copy-article');
@@ -37,12 +38,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const customTone = customToneInput.value.trim();
         const size = sizeSelect.value;
         const keywords = keywordsInput.value.trim();
+        const language = languageSelect.value;
         const audienceAge = audienceAgeInput.value.trim();
         const markdown = markdownSelect.value;
         const readingLevel = readingLevelSelect.value;
-        const grammarCustom = grammarCustomInput.value.trim();
+        const personGrammar = personGrammarSelect.value;
 
-        let prompt = `Redacta un articulo detallado sobre: ${topic}`;
+        let prompt = `Redacta un articulo detallado en ${language} sobre: ${topic}`;
 
         if (tone === 'custom' && customTone) {
             prompt += `. Tono: ${customTone}`;
@@ -53,12 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (keywords) prompt += `. Incluye las palabras clave: ${keywords}`;
         if (audienceAge) prompt += `. Público objetivo de edad ${audienceAge}`;
         if (readingLevel) prompt += `. Nivel de lectura: ${readingLevel}`;
-        if (grammarCustom) prompt += `. Ajustes gramaticales: ${grammarCustom}`;
+        if (personGrammar) prompt += `. Persona gramatical: ${personGrammar}`;
         if (markdown === 'si') {
             prompt += `. Formatea el resultado en Markdown`;
         } else {
             prompt += `. No uses formato Markdown en el resultado`;
         }
+        prompt += `. Devuelve únicamente el artículo sin explicaciones.`;
 
         resultSection.classList.remove('hidden');
         result.textContent = 'Generando...';
