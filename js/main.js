@@ -262,6 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.getElementById("nav-menu");
     const menuToggleBtn = document.getElementById('menu-toggle');
     const menuItems = document.getElementById('menu-items');
+    const navOverlay = document.getElementById('nav-overlay');
     // --- AUTH, MODALS & SETTINGS LOGIC ---
     const showLoginModal = () => loginRequiredModal.classList.remove('hidden');
     const hideLoginModal = () => loginRequiredModal.classList.add('hidden');
@@ -532,11 +533,15 @@ document.addEventListener('DOMContentLoaded', () => {
             historyOverlay.classList.toggle('hidden');
             userAuthArea.classList.toggle('hidden');
             navMenu.classList.toggle("hidden");
+            navOverlay.classList.add('hidden');
+            menuItems.classList.add('hidden');
         });
         historyOverlay.addEventListener('click', () => {
             historyPanel.classList.add('hidden', 'translate-x-full');
             historyOverlay.classList.add('hidden');
             navMenu.classList.remove("hidden");
+            navOverlay.classList.add('hidden');
+            menuItems.classList.add('hidden');
             userAuthArea.classList.remove('hidden');
         });
 
@@ -596,6 +601,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         menuToggleBtn.addEventListener('click', () => {
             menuItems.classList.toggle('hidden');
+            navOverlay.classList.toggle('hidden');
+        });
+
+        navOverlay.addEventListener('click', () => {
+            menuItems.classList.add('hidden');
+            navOverlay.classList.add('hidden');
         });
 
         renderHistory();
