@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('swipeHintShown', '1');
         }
 
-        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en ${lastLanguage}. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
+        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en el idioma del artículo. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
         if (isMarkdown(article)) {
             htmlPrompt += ' Sigue la estructura del formato Markdown para transformarlo en HTML.';
         }
