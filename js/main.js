@@ -264,8 +264,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updateAuthStateUI = async () => {
         if (puter.auth.isSignedIn()) {
-            const user = await puter.auth.getUser();
-            userAuthArea.innerHTML = `<span class="text-sm font-medium text-gray-800 dark:text-gray-200">${user.username}</span>`;
+            // Username display removed per design update
+            userAuthArea.innerHTML = '';
             logoutBtnSettings.classList.remove('hidden');
         } else {
             userAuthArea.innerHTML = `<button id="sign-in-btn" class="bg-green-600 text-white text-sm font-bold py-2 px-4 rounded-lg hover:bg-green-700">${getT('signIn')}</button>`;
