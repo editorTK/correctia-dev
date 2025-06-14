@@ -8,6 +8,7 @@
     <link rel="icon" type="image/png" href="../images/icono-correctia.png">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://js.puter.com/v2/"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans flex flex-col min-h-screen">
     <div class="container mx-auto max-w-4xl p-4 md:p-8 flex-grow">
@@ -112,6 +113,7 @@
                 </div>
                 <div class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
                     <pre id="article-result" class="whitespace-pre-wrap font-sans"></pre>
+                    <div id="article-html" class="hidden"></div>
                 </div>
                 <div id="swipe-hint" class="hidden mt-2 text-center text-sm text-gray-600 dark:text-gray-400">Desliza a la derecha o izquierda para alternar entre HTML y formato normal</div>
             </div>
