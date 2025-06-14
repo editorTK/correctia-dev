@@ -19,7 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const convertHtmlBtn = document.getElementById('convert-html');
     const htmlSelect = document.getElementById('html-format');
     const swipeHint = document.getElementById('swipe-hint');
+    const articleHtml = document.getElementById('article-html');
     let lastLanguage = 'español';
+    let lastArticle = '';
+    let lastHtml = '';
+    let lastMarkdown = false;
+    let showingHtml = false;
+    let touchStartX = 0;
 
     toneSelect.addEventListener('change', () => {
         if (toneSelect.value === 'custom') {
@@ -99,11 +105,17 @@ document.addEventListener('DOMContentLoaded', () => {
         prompt += `. Devuelve únicamente el artículo sin explicaciones.`;
 
         lastLanguage = language;
+        lastMarkdown = markdown === 'si';
         resultSection.classList.remove('hidden');
         result.textContent = 'Generando...';
         try {
             const res = await puter.ai.chat(prompt, { model: 'gpt-4.1-nano' });
             result.textContent = res?.message?.content || 'Sin respuesta';
+            lastArticle = result.textContent;
+            showingHtml = false;
+            articleHtml.classList.add('hidden');
+            result.classList.remove('hidden');
+            articleHtml.innerHTML = '';
         } catch (err) {
             console.error('Error generando articulo:', err);
             result.textContent = 'Hubo un error al generar el articulo.';
@@ -111,7 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     copyArticleBtn.addEventListener('click', () => {
-        navigator.clipboard.writeText(result.innerText).then(() => {
+        const textToCopy = showingHtml ? articleHtml.innerText : result.innerText;
+        navigator.clipboard.writeText(textToCopy).then(() => {
             copyArticleBtn.innerText = '¡Copiado!';
             setTimeout(() => { copyArticleBtn.innerText = 'Copiar'; }, 2000);
         });
@@ -129,7 +142,16 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('swipeHintShown', '1');
         }
 
-        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en el idioma del artículo. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
+        if (lastMarkdown) {
+            lastHtml = marked.parse(article);
+            articleHtml.innerHTML = lastHtml;
+            result.classList.add('hidden');
+            articleHtml.classList.remove('hidden');
+            showingHtml = true;
+            return;
+        }
+
+        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en ${lastLanguage}. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
         if (isMarkdown(article)) {
             htmlPrompt += ' Sigue la estructura del formato Markdown para transformarlo en HTML.';
         }
@@ -138,12 +160,37 @@ document.addEventListener('DOMContentLoaded', () => {
         convertHtmlBtn.innerText = '🧠 ...';
         try {
             const res = await puter.ai.chat(`${htmlPrompt}\n\n---\n\n${article}`, { model: 'gpt-4.1-nano' });
-            result.textContent = res?.message?.content || 'Sin respuesta';
+            lastHtml = res?.message?.content || 'Sin respuesta';
+            articleHtml.innerHTML = lastHtml;
+            result.classList.add('hidden');
+            articleHtml.classList.remove('hidden');
+            showingHtml = true;
         } catch (err) {
             console.error('Error convirtiendo a HTML:', err);
         } finally {
             convertHtmlBtn.disabled = false;
             convertHtmlBtn.innerText = originalText;
         }
+    });
+
+    const toggleFormat = () => {
+        if (showingHtml) {
+            articleHtml.classList.add('hidden');
+            result.classList.remove('hidden');
+            result.textContent = lastArticle;
+            showingHtml = false;
+        } else if (lastHtml) {
+            result.classList.add('hidden');
+            articleHtml.classList.remove('hidden');
+            articleHtml.innerHTML = lastHtml;
+            showingHtml = true;
+        }
+    };
+
+    resultSection.addEventListener('dblclick', toggleFormat);
+    resultSection.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+    resultSection.addEventListener('touchend', (e) => {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 50) toggleFormat();
     });
 });
