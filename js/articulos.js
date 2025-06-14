@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const htmlSelect = document.getElementById('html-format');
     const swipeHint = document.getElementById('swipe-hint');
     let lastLanguage = 'español';
+    let plainContent = '';
+    let htmlContent = '';
+    let showingHtml = false;
+    let touchStartX = null;
 
     toneSelect.addEventListener('change', () => {
         if (toneSelect.value === 'custom') {
@@ -103,7 +107,10 @@ document.addEventListener('DOMContentLoaded', () => {
         result.textContent = 'Generando...';
         try {
             const res = await puter.ai.chat(prompt, { model: 'gpt-4.1-nano' });
-            result.textContent = res?.message?.content || 'Sin respuesta';
+            plainContent = res?.message?.content || 'Sin respuesta';
+            htmlContent = '';
+            showingHtml = false;
+            result.textContent = plainContent;
         } catch (err) {
             console.error('Error generando articulo:', err);
             result.textContent = 'Hubo un error al generar el articulo.';
@@ -119,9 +126,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const isMarkdown = (text) => /(^#|\*\*|\*|`|\-|\d+\. )/m.test(text);
 
+    const toggleView = () => {
+        if (!htmlContent) return;
+        if (showingHtml) {
+            result.textContent = plainContent;
+            showingHtml = false;
+        } else {
+            result.textContent = htmlContent;
+            showingHtml = true;
+        }
+    };
+
+    result.addEventListener('click', toggleView);
+
+    result.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+
+    result.addEventListener('touchend', (e) => {
+        if (touchStartX === null) return;
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 30) toggleView();
+        touchStartX = null;
+    });
+
     convertHtmlBtn.addEventListener('click', async () => {
         const article = result.innerText.trim();
         if (!article) return;
+        plainContent = article;
         if (!localStorage.getItem('swipeHintShown')) {
             swipeHint.classList.remove('hidden');
             swipeHint.classList.add('animate-bounce');
@@ -129,7 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('swipeHintShown', '1');
         }
 
-        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en el idioma del artículo. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
+        let htmlPrompt = `Eres un experto en transformar formato texto a HTML. Transforma este artículo en formato HTML. Devuelve únicamente el código, sin explicaciones ni nada extra, y responde en ${lastLanguage}. No agregues código JavaScript, solo HTML y un poco de CSS para mostrar el texto de manera visualmente atractiva.`;
         if (isMarkdown(article)) {
             htmlPrompt += ' Sigue la estructura del formato Markdown para transformarlo en HTML.';
         }
@@ -138,7 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
         convertHtmlBtn.innerText = '🧠 ...';
         try {
             const res = await puter.ai.chat(`${htmlPrompt}\n\n---\n\n${article}`, { model: 'gpt-4.1-nano' });
-            result.textContent = res?.message?.content || 'Sin respuesta';
+            htmlContent = res?.message?.content || 'Sin respuesta';
+            result.textContent = htmlContent;
+            showingHtml = true;
         } catch (err) {
             console.error('Error convirtiendo a HTML:', err);
         } finally {
