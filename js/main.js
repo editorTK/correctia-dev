@@ -258,7 +258,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const menuToggleBtn = document.getElementById('menu-toggle');
     const menuItems = document.getElementById('menu-items');
     const navOverlay = document.getElementById('nav-overlay');
-    const articlesAnnouncement = document.getElementById("articles-announcement");
     // --- AUTH, MODALS & SETTINGS LOGIC ---
     const showLoginModal = () => loginRequiredModal.classList.remove('hidden');
     const hideLoginModal = () => loginRequiredModal.classList.add('hidden');
@@ -590,23 +589,12 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggleBtn.addEventListener('click', () => {
             menuItems.classList.toggle('hidden');
             navOverlay.classList.toggle('hidden');
-            if (!localStorage.getItem("articlesHintShown")) {
-                localStorage.setItem("articlesHintShown", "true");
-                articlesAnnouncement.classList.add("hidden");
-            }
         });
 
         navOverlay.addEventListener('click', () => {
             menuItems.classList.add('hidden');
             navOverlay.classList.add('hidden');
         });
-        if (!localStorage.getItem("articlesHintShown")) {
-            articlesAnnouncement.classList.remove("hidden");
-            setTimeout(() => {
-                articlesAnnouncement.classList.add("hidden");
-                localStorage.setItem("articlesHintShown", "true");
-            }, 6000);
-        }
 
         renderHistory();
     }
