@@ -1,4 +1,106 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const STRINGS = {
+        es: {
+            pageTitle: 'Crear Artículos - Correctia',
+            header: 'Crear Artículos',
+            topicLabel: 'Tema o descripción',
+            topicPlaceholder: 'Escribe el tema de tu artículo...',
+            toneLabel: 'Tono (opcional)',
+            noPref: 'Sin preferencia',
+            toneFormal: 'Formal',
+            toneInformal: 'Informal',
+            toneCasual: 'Casual',
+            toneCustom: 'Personalizado...',
+            customTonePlaceholder: 'Escribe el tono deseado',
+            sizeLabel: 'Tamaño (opcional)',
+            sizeSmall: 'Pequeño',
+            sizeMedium: 'Mediano',
+            sizeLarge: 'Grande',
+            keywordsLabel: 'Palabras clave (opcional)',
+            keywordsPlaceholder: 'SEO, marketing, IA...',
+            languageLabel: 'Idioma',
+            langSpanish: 'Español',
+            langEnglish: 'Inglés',
+            langOther: 'Otro...',
+            customLangPlaceholder: 'Especifica el idioma',
+            advSettings: 'Configuración avanzada',
+            audienceLabel: 'Rango de edad del público objetivo',
+            audiencePlaceholder: '18-35, por ejemplo',
+            markdownLabel: 'Formato Markdown',
+            yes: 'Sí',
+            no: 'No',
+            readingLabel: 'Nivel de lectura',
+            readingBasic: 'Básico',
+            readingIntermediate: 'Intermedio',
+            readingProfessional: 'Profesional',
+            personLabel: 'Persona gramatical',
+            firstPerson: '1ra persona',
+            secondPerson: '2da persona',
+            thirdPerson: '3ra persona',
+            htmlLabel: 'Formato HTML',
+            submitBtn: 'Generar Artículo',
+            resultTitle: 'Artículo Generado',
+            copyBtn: 'Copiar',
+            copied: '¡Copiado!',
+            convertBtn: 'Convertir a HTML',
+            swipeHint: 'Desliza a la derecha o izquierda para alternar entre HTML y formato normal',
+            generating: 'Generando...',
+            error: 'Hubo un error al generar el articulo.',
+            noMarkdownHtml: 'No puedes seleccionar Markdown y HTML a la vez.'
+        },
+        en: {
+            pageTitle: 'Create Articles - Correctia',
+            header: 'Create Articles',
+            topicLabel: 'Topic or description',
+            topicPlaceholder: 'Write the topic of your article...',
+            toneLabel: 'Tone (optional)',
+            noPref: 'No preference',
+            toneFormal: 'Formal',
+            toneInformal: 'Informal',
+            toneCasual: 'Casual',
+            toneCustom: 'Custom...',
+            customTonePlaceholder: 'Write the desired tone',
+            sizeLabel: 'Length (optional)',
+            sizeSmall: 'Short',
+            sizeMedium: 'Medium',
+            sizeLarge: 'Long',
+            keywordsLabel: 'Keywords (optional)',
+            keywordsPlaceholder: 'SEO, marketing, AI...',
+            languageLabel: 'Language',
+            langSpanish: 'Spanish',
+            langEnglish: 'English',
+            langOther: 'Other...',
+            customLangPlaceholder: 'Specify language',
+            advSettings: 'Advanced settings',
+            audienceLabel: 'Target audience age range',
+            audiencePlaceholder: '18-35, for example',
+            markdownLabel: 'Markdown format',
+            yes: 'Yes',
+            no: 'No',
+            readingLabel: 'Reading level',
+            readingBasic: 'Basic',
+            readingIntermediate: 'Intermediate',
+            readingProfessional: 'Professional',
+            personLabel: 'Grammatical person',
+            firstPerson: '1st person',
+            secondPerson: '2nd person',
+            thirdPerson: '3rd person',
+            htmlLabel: 'HTML format',
+            submitBtn: 'Generate Article',
+            resultTitle: 'Generated Article',
+            copyBtn: 'Copy',
+            copied: 'Copied!',
+            convertBtn: 'Convert to HTML',
+            swipeHint: 'Swipe right or left to toggle between HTML and normal format',
+            generating: 'Generating...',
+            error: 'There was an error generating the article.',
+            noMarkdownHtml: 'You cannot select both Markdown and HTML.'
+        }
+    };
+
+    let currentLang = localStorage.getItem('lang') || 'es';
+    const t = (k) => STRINGS[currentLang][k];
+
     const form = document.getElementById('article-form');
     const topicInput = document.getElementById('article-topic');
     const toneSelect = document.getElementById('article-tone');
@@ -24,6 +126,58 @@ document.addEventListener('DOMContentLoaded', () => {
     let htmlContent = '';
     let showingHtml = false;
     let touchStartX = null;
+
+    const applyTranslations = () => {
+        document.documentElement.lang = currentLang;
+        document.title = t('pageTitle');
+        document.getElementById('page-header').innerText = t('header');
+        document.querySelector('label[for="article-topic"]').innerText = t('topicLabel');
+        topicInput.placeholder = t('topicPlaceholder');
+        document.querySelector('label[for="article-tone"]').innerText = t('toneLabel');
+        toneSelect.options[0].text = t('noPref');
+        toneSelect.options[1].text = t('toneFormal');
+        toneSelect.options[2].text = t('toneInformal');
+        toneSelect.options[3].text = t('toneCasual');
+        toneSelect.options[4].text = t('toneCustom');
+        customToneInput.placeholder = t('customTonePlaceholder');
+        document.querySelector('label[for="article-size"]').innerText = t('sizeLabel');
+        sizeSelect.options[0].text = t('noPref');
+        sizeSelect.options[1].text = t('sizeSmall');
+        sizeSelect.options[2].text = t('sizeMedium');
+        sizeSelect.options[3].text = t('sizeLarge');
+        document.querySelector('label[for="article-keywords"]').innerText = t('keywordsLabel');
+        keywordsInput.placeholder = t('keywordsPlaceholder');
+        document.querySelector('label[for="article-language"]').innerText = t('languageLabel');
+        languageSelect.options[0].text = t('langSpanish');
+        languageSelect.options[1].text = t('langEnglish');
+        languageSelect.options[2].text = t('langOther');
+        customLanguageInput.placeholder = t('customLangPlaceholder');
+        toggleAdvancedBtn.innerText = t('advSettings');
+        document.querySelector('label[for="audience-age"]').innerText = t('audienceLabel');
+        audienceAgeInput.placeholder = t('audiencePlaceholder');
+        document.querySelector('label[for="markdown-format"]').innerText = t('markdownLabel');
+        markdownSelect.options[0].text = t('no');
+        markdownSelect.options[1].text = t('yes');
+        document.querySelector('label[for="reading-level"]').innerText = t('readingLabel');
+        readingLevelSelect.options[0].text = t('readingBasic');
+        readingLevelSelect.options[1].text = t('readingIntermediate');
+        readingLevelSelect.options[2].text = t('readingProfessional');
+        document.querySelector('label[for="person-grammar"]').innerText = t('personLabel');
+        personGrammarSelect.options[0].text = t('noPref');
+        personGrammarSelect.options[1].text = t('firstPerson');
+        personGrammarSelect.options[2].text = t('secondPerson');
+        personGrammarSelect.options[3].text = t('thirdPerson');
+        document.querySelector('label[for="html-format"]').innerText = t('htmlLabel');
+        htmlSelect.options[0].text = t('no');
+        htmlSelect.options[1].text = t('yes');
+        form.querySelector('button[type="submit"]').innerText = t('submitBtn');
+        document.querySelector('#article-result-section h2').innerText = t('resultTitle');
+        copyArticleBtn.innerText = t('copyBtn');
+        convertHtmlBtn.innerText = t('convertBtn');
+        swipeHint.innerText = t('swipeHint');
+    };
+
+    applyTranslations();
 
     toneSelect.addEventListener('change', () => {
         if (toneSelect.value === 'custom') {
@@ -76,7 +230,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const personGrammar = personGrammarSelect.value;
 
         if (markdown === 'si' && htmlFormat === 'si') {
-            alert('No puedes seleccionar Markdown y HTML a la vez.');
+            alert(t('noMarkdownHtml'));
             return;
         }
 
@@ -104,7 +258,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         lastLanguage = language;
         resultSection.classList.remove('hidden');
-        result.textContent = 'Generando...';
+        result.textContent = t('generating');
         try {
             const res = await puter.ai.chat(prompt, { model: 'gpt-4.1-nano' });
             plainContent = res?.message?.content || 'Sin respuesta';
@@ -113,14 +267,14 @@ document.addEventListener('DOMContentLoaded', () => {
             result.textContent = plainContent;
         } catch (err) {
             console.error('Error generando articulo:', err);
-            result.textContent = 'Hubo un error al generar el articulo.';
+            result.textContent = t('error');
         }
     });
 
     copyArticleBtn.addEventListener('click', () => {
         navigator.clipboard.writeText(result.innerText).then(() => {
-            copyArticleBtn.innerText = '¡Copiado!';
-            setTimeout(() => { copyArticleBtn.innerText = 'Copiar'; }, 2000);
+            copyArticleBtn.innerText = t('copied');
+            setTimeout(() => { copyArticleBtn.innerText = t('copyBtn'); }, 2000);
         });
     });
 

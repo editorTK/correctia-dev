@@ -673,11 +673,13 @@ document.addEventListener('DOMContentLoaded', () => {
         menuToggleBtn.addEventListener('click', () => {
             menuItems.classList.toggle('hidden');
             navOverlay.classList.toggle('hidden');
+            menuToggleBtn.classList.toggle('hidden');
         });
 
         navOverlay.addEventListener('click', () => {
             menuItems.classList.add('hidden');
             navOverlay.classList.add('hidden');
+            menuToggleBtn.classList.remove('hidden');
         });
 
         renderHistory();
