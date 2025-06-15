@@ -27,9 +27,7 @@
 <body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-200 font-sans flex flex-col min-h-screen">
 
         
-        <button id="settings-toggle" class="fixed top-4 left-20 z-20 bg-gray-700 hover:bg-gray-600 text-white font-bold p-3 rounded-full shadow-lg transition-transform transform hover:scale-110">
-            <img src="https://www.svgrepo.com/show/193270/settings-gear.svg" alt="Ajustes" class="h-5 w-5">
-        </button>
+
         
 
     <div class="container mx-auto max-w-4xl p-4 md:p-8 flex-grow">
@@ -91,10 +89,11 @@
         <div id="user-auth-area" class="fixed top-4 right-20 z-20 flex items-center gap-3">
             </div>
         
-        <div id="nav-menu" class="fixed top-4 right-4 z-20 relative">
-            <button id="menu-toggle" class="text-2xl bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-lg">☰</button>
-            <div id="menu-items" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 flex flex-col gap-2">
+        <div id="nav-menu" class="fixed top-4 left-20 z-20 relative">
+            <button id="menu-toggle" class="text-2xl bg-gray-700 hover:bg-gray-600 text-white p-2 rounded-lg shadow-lg transition-transform transform hover:scale-110">☰</button>
+            <div id="menu-items" class="hidden absolute left-0 mt-2 w-48 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-xl p-2 flex flex-col gap-2">
                 <button id="history-toggle" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded-lg">🕒 Historial</button>
+                <button id="settings-toggle" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg">⚙ Ajustes</button>
                 <a href="herramientas/articulos.html" id="create-articles" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg ml-2">Crear Artículos</a>
             </div>
         </div>
