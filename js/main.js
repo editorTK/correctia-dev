@@ -336,6 +336,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.getElementById("nav-menu");
     const menuToggleBtn = document.getElementById('menu-toggle');
     const menuItems = document.getElementById('menu-items');
+    const menuContent = document.getElementById('menu-content');
     const navOverlay = document.getElementById('nav-overlay');
     // --- AUTH, MODALS & SETTINGS LOGIC ---
     const showLoginModal = () => loginRequiredModal.classList.remove('hidden');
@@ -683,7 +684,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         menuItems.addEventListener('click', (e) => {
-            if (e.target === menuItems) {
+            if (!menuContent.contains(e.target)) {
                 menuItems.classList.add('hidden');
                 navOverlay.classList.add('hidden');
                 menuToggleBtn.classList.remove('hidden');
