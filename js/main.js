@@ -157,6 +157,8 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('history-title').innerText = t.historyTitle;
         document.getElementById('clear-history-btn').innerText = t.clearHistory;
         document.getElementById('header-subtitle').innerText = t.headerSubtitle;
+        const settingsToggleBtn = document.getElementById('settings-toggle');
+        if (settingsToggleBtn) settingsToggleBtn.innerText = `⚙ ${t.settings}`;
         textInput.placeholder = t.placeholder;
         customPromptInput.placeholder = t.customPromptPlaceholder || '';
         document.getElementById('main-action-btn').innerHTML = t.actionCorrect;
@@ -429,6 +431,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 resultContainer.innerText = item.result_text;
                 resultSection.classList.remove('hidden');
                 historyPanel.classList.add('hidden', 'translate-x-full');
+                historyOverlay.classList.add('hidden');
+                navMenu.classList.remove('hidden');
+                navOverlay.classList.add('hidden');
+                menuItems.classList.add('hidden');
+                userAuthArea.classList.remove('hidden');
             });
             historyList.appendChild(div);
         });
