@@ -682,6 +682,14 @@ document.addEventListener('DOMContentLoaded', () => {
             menuToggleBtn.classList.remove('hidden');
         });
 
+        menuItems.addEventListener('click', (e) => {
+            if (e.target === menuItems) {
+                menuItems.classList.add('hidden');
+                navOverlay.classList.add('hidden');
+                menuToggleBtn.classList.remove('hidden');
+            }
+        });
+
         renderHistory();
 
         if (!localStorage.getItem('articlesHintShown')) {
