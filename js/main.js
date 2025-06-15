@@ -60,7 +60,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 summarize: 'Resumen Generado',
                 expand: 'Texto Expandido',
                 custom: 'Resultado Personalizado'
-            }
+            },
+            whatIsHTML: `<h2 class="text-3xl font-semibold mb-4">¿Qué es Correctia?</h2>
+                <p class="max-w-2xl mx-auto">Correctia es una herramienta de inteligencia artificial que te ayuda a corregir, optimizar y crear textos directamente desde tu navegador. Funciona sin necesidad de descargar nada ni instalar extensiones. Su diseño está pensado para ser rápido, intuitivo y compatible con todos los dispositivos.</p>
+                <p class="max-w-2xl mx-auto mt-4">A diferencia de otros correctores automáticos, Correctia ofrece funciones avanzadas como:</p>
+                <ul class="list-disc list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Corrección de ortografía, gramática y estilo</li>
+                    <li>Reescritura con distintos tonos (formal, casual, creativo, etc.)</li>
+                    <li>Resumen y expansión de ideas</li>
+                    <li>Personalización del texto para diferentes niveles de lectura</li>
+                    <li>Creación de artículos con parámetros SEO</li>
+                </ul>
+                <p class="max-w-2xl mx-auto mt-4">Todo esto con una interfaz moderna y adaptable, pensada tanto para estudiantes, creadores de contenido, redactores y profesionales del marketing.</p>`,
+            howWorksHTML: `<h2 class="text-3xl font-semibold mb-4">¿Cómo funciona Correctia?</h2>
+                <p class="max-w-2xl mx-auto">Usar Correctia es muy sencillo. Solo necesitas conexión a internet y una cuenta gratuita en Puter para acceder al motor de IA.</p>
+                <ol class="list-decimal list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Pega tu texto o escribe directamente en el editor principal.</li>
+                    <li>Elige una acción: puedes corregir, cambiar el tono, resumir, simplificar o reescribir.</li>
+                    <li>Personaliza el resultado usando las opciones avanzadas: nivel de lectura, persona gramatical, formato HTML o Markdown, y mucho más.</li>
+                    <li>Haz clic en procesar y en segundos obtendrás un texto mejorado, listo para usar.</li>
+                </ol>
+                <p class="max-w-2xl mx-auto mt-4">Correctia guarda tu historial localmente, para que puedas revisar o reutilizar respuestas sin perder tu trabajo anterior.</p>`,
+            articlesHTML: `<h2 class="text-3xl font-semibold mb-4">Crea artículos con IA en segundos</h2>
+                <p class="max-w-2xl mx-auto">Además de corregir textos, Correctia te permite generar artículos desde cero, ideales para blogs, páginas web, redes sociales o estrategias de marketing.</p>
+                <p class="max-w-2xl mx-auto mt-4">En la sección &quot;Crear artículo&quot;, solo necesitas:</p>
+                <ul class="list-disc list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Escribir el tema principal del artículo</li>
+                    <li>(Opcional) Ajustar el tono, tamaño, palabras clave, idioma, rango de edad del público objetivo, etc.</li>
+                    <li>Elegir si quieres salida en HTML o Markdown</li>
+                    <li>Definir la persona gramatical y el nivel de lectura</li>
+                </ul>
+                <p class="max-w-2xl mx-auto mt-4">La herramienta generará automáticamente un artículo estructurado y optimizado para tu audiencia, listo para publicar. Es ideal para quienes desean contenido de calidad sin perder tiempo en redacción desde cero.</p>`
         },
         en: {
             settings: 'Settings',
@@ -120,7 +150,37 @@ document.addEventListener('DOMContentLoaded', () => {
                 summarize: 'Generated Summary',
                 expand: 'Expanded Text',
                 custom: 'Custom Result'
-            }
+            },
+            whatIsHTML: `<h2 class="text-3xl font-semibold mb-4">What is Correctia?</h2>
+                <p class="max-w-2xl mx-auto">Correctia is an AI tool that helps you correct, optimize and create texts right in your browser. It works without downloads or extensions. Its design is fast, intuitive and compatible with all devices.</p>
+                <p class="max-w-2xl mx-auto mt-4">Unlike other automatic proofreaders, Correctia offers advanced features such as:</p>
+                <ul class="list-disc list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Spelling, grammar and style correction</li>
+                    <li>Rewrite with different tones (formal, casual, creative, etc.)</li>
+                    <li>Summary and expansion of ideas</li>
+                    <li>Text customization for different reading levels</li>
+                    <li>Article creation with SEO parameters</li>
+                </ul>
+                <p class="max-w-2xl mx-auto mt-4">All of this with a modern, adaptable interface aimed at students, content creators, writers and marketing professionals.</p>`,
+            howWorksHTML: `<h2 class="text-3xl font-semibold mb-4">How does Correctia work?</h2>
+                <p class="max-w-2xl mx-auto">Using Correctia is very simple. You just need an internet connection and a free Puter account to access the AI engine.</p>
+                <ol class="list-decimal list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Paste your text or write directly in the main editor.</li>
+                    <li>Select an action: correct, change the tone, summarize, simplify or rewrite.</li>
+                    <li>Customize the result using the advanced options: reading level, grammatical person, HTML or Markdown format, and more.</li>
+                    <li>Click process and in seconds you will get an improved text ready to use.</li>
+                </ol>
+                <p class="max-w-2xl mx-auto mt-4">Correctia saves your history locally so you can review or reuse responses without losing your previous work.</p>`,
+            articlesHTML: `<h2 class="text-3xl font-semibold mb-4">Create articles with AI in seconds</h2>
+                <p class="max-w-2xl mx-auto">Besides correcting text, Correctia lets you generate articles from scratch, ideal for blogs, websites, social networks or marketing strategies.</p>
+                <p class="max-w-2xl mx-auto mt-4">In the \"Create article\" section, you only need:</p>
+                <ul class="list-disc list-inside max-w-md mx-auto text-left space-y-1 mt-2">
+                    <li>Write the main topic of the article</li>
+                    <li>(Optional) Adjust tone, size, keywords, language, target audience age, etc.</li>
+                    <li>Choose whether you want output in HTML or Markdown</li>
+                    <li>Define the grammatical person and reading level</li>
+                </ul>
+                <p class="max-w-2xl mx-auto mt-4">The tool will automatically generate a structured and optimized article for your audience, ready to publish. It's perfect for those who want quality content without wasting time writing from scratch.</p>`
         }
     };
 
@@ -179,6 +239,13 @@ document.addEventListener('DOMContentLoaded', () => {
         changesTitleEl.innerText = t.changesTitle;
         document.getElementById('privacy-link').innerText = t.privacy || 'Política de Privacidad';
         document.getElementById('terms-link').innerText = t.legalTerms || 'Términos de Uso';
+
+        const whatIsEl = document.getElementById('what-is');
+        const howWorksEl = document.getElementById('how-works');
+        const articlesEl = document.getElementById('articles-section');
+        if (whatIsEl) whatIsEl.innerHTML = t.whatIsHTML;
+        if (howWorksEl) howWorksEl.innerHTML = t.howWorksHTML;
+        if (articlesEl) articlesEl.innerHTML = t.articlesHTML;
 
         // update prompt titles
         Object.keys(PROMPTS).forEach(k => {
